@@ -11,7 +11,6 @@ pub   =  rospy.Publisher("/turtle1/cmd_vel", Twist, queue_size=10)
 rate  =  rospy.Rate(10)
 move  =  Twist()
 pose  =  Pose()
-angle = 90
 def update_pose(data):
     global pose
     pose.x = data.x
@@ -20,24 +19,15 @@ def update_pose(data):
 while not rospy.is_shutdown() :
     sub = rospy.Subscriber('turtle1/pose', Pose, update_pose)
     move.linear.x = 1
-    move.linear.y = 0
     move.angular.z =0
-    if   pose.x > 10.2:
-        move.linear.x  = 21.45
-        move.angular.z = -23.83
+    if   pose.x > 9:        
+        move.linear.x  = 2
+        move.angular.z = 0.98515
         
-    elif pose.x < 0.8:
-        move.linear.x  = 25
-        move.angular.z = -22.5
+    elif pose.x < 2:
+        move.linear.x  = 2
+        move.angular.z = 0.98515
  
-    ### 縦座標設定
-    if   pose.y < 0.8:
-        move.linear.x  = 25
-        move.angular.z = -22.5
-    elif pose.y >= 10.2:
-        move.linear.x  = 25
-        move.angular.z = -22.5
-    
     rospy.loginfo(pose.x)
     rospy.loginfo(pose.y)
     pub.publish(move)
