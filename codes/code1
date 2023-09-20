@@ -7,11 +7,11 @@ from turtlesim.msg import Pose
 
 
 rospy.init_node("kame")
-pub = rospy.Publisher("/turtle1/cmd_vel", Twist, queue_size=10)
-rate = rospy.Rate(10)
-move = Twist()
-pose = Pose()
-
+pub   =  rospy.Publisher("/turtle1/cmd_vel", Twist, queue_size=10)
+rate  =  rospy.Rate(10)
+move  =  Twist()
+pose  =  Pose()
+angle = 90
 def update_pose(data):
     global pose
     pose.x = data.x
@@ -22,21 +22,21 @@ while not rospy.is_shutdown() :
     move.linear.x = 1
     move.linear.y = 0
     move.angular.z =0
-    if   pose.x > 10.5:
-        move.linear.x  = 1
-        move.angular.z = -1
+    if   pose.x > 10.2:
+        move.linear.x  = 21.45
+        move.angular.z = -23.83
         
-    elif pose.x < 0.5:
-        move.linear.x  = 1
-        move.angular.z = -1
+    elif pose.x < 0.8:
+        move.linear.x  = 25
+        move.angular.z = -22.5
  
     ### 縦座標設定
-    if   pose.y < 0.5:
-        move.linear.x  = 1
-        move.angular.z = -1
-    elif pose.y >= 10.5:
-        move.linear.x  = 1
-        move.angular.z = -1
+    if   pose.y < 0.8:
+        move.linear.x  = 25
+        move.angular.z = -22.5
+    elif pose.y >= 10.2:
+        move.linear.x  = 25
+        move.angular.z = -22.5
     
     rospy.loginfo(pose.x)
     rospy.loginfo(pose.y)
