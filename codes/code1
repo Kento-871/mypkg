@@ -5,6 +5,7 @@ import rospy
 from geometry_msgs.msg import Twist
 from turtlesim.msg import Pose
 
+
 rospy.init_node("kame")
 pub = rospy.Publisher("/turtle1/cmd_vel", Twist, queue_size=10)
 rate = rospy.Rate(10)
@@ -17,23 +18,27 @@ def update_pose(data):
     pose.y = data.y
     
 while not rospy.is_shutdown() :
+    sub = rospy.Subscriber('turtle1/pose', Pose, update_pose)
     move.linear.x = 1
+    move.linear.y = 0
     move.angular.z =0
-    if   pose.x >= 10.00:
+    if   pose.x > 10.5:
         move.linear.x  = 1
-        move.angular.z = 3
+        move.angular.z = -1
         
-    elif pose.x >= 1:
-        move.linear.x  = 2
-        move.angular.z = 1
+    elif pose.x < 0.5:
+        move.linear.x  = 1
+        move.angular.z = -1
  
     ### 縦座標設定
-    if   pose.y < 0:
-        move.linear.x  = 2
-        move.angular.z = 1
-    elif pose.y >= 10:
-        move.linear.x  = 2
-        move.angular.z = 1
+    if   pose.y < 0.5:
+        move.linear.x  = 1
+        move.angular.z = -1
+    elif pose.y >= 10.5:
+        move.linear.x  = 1
+        move.angular.z = -1
     
+    rospy.loginfo(pose.x)
+    rospy.loginfo(pose.y)
     pub.publish(move)
     rate.sleep()
