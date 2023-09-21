@@ -22,11 +22,15 @@ while not rospy.is_shutdown() :
     move.angular.z =0
     if   pose.x > 9:        
         move.linear.x  = 2
-        move.angular.z = 0.98515
+        move.angular.z = 0.955
         
     elif pose.x < 2:
         move.linear.x  = 2
-        move.angular.z = 0.98515
+        move.angular.z = 0.955
+        
+    if   pose.x > 5.544445 and pose.y < 5.544444:
+        move.linear.x  = 0
+        move.angular.z = 0
  
     rospy.loginfo(pose.x)
     rospy.loginfo(pose.y)
